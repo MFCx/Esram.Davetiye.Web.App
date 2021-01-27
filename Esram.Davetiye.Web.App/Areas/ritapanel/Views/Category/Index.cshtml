@@ -1,0 +1,173 @@
+﻿@model CategoryViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/ritapanel/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="container my-5 py-5">
+    <div class="row">
+        <div class="accordion col" id="accordionExample">
+            @for (int i = 0; i < Model.MasterCategories.Count; i++)
+            {
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <div class="row">
+                            <div class="col-md-1 pt-2">
+                                <form method="post" id="frmSil" asp-action="DeleteMasterCategory" asp-controller="Category" asp-area="ritapanel">
+                                    <input type="hidden" name="id" value="@Model.MasterCategories[i].Id" />
+                                    <button id="btnSil" class="btn btn-danger text-white"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
+                            <div class="col-md-1 pt-2">
+                                <button data-toggle="modal" data-target="#editMasterModal" onclick="EditModal(@Model.MasterCategories[i].Id)" class="btn btn-warning text-white"><i class="fa fa-edit"></i></button>
+                            </div>
+                            <div class="col-md-9 offset-md-1">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#@("collapse" + i)" aria-expanded="true" aria-controls="collapseOne">
+                                        <img src="~/@Model.MasterCategories[i].PicturePath" width="40" /> @Model.MasterCategories[i].Name
+                                    </button>
+                                </h2>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="@("collapse" + i)" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <button data-toggle="modal" data-target="#addCategoryModal" onclick="AddCategoryModal(@Model.MasterCategories[i].Id)" class="btn btn-outline-info btn-block mb-1">Alt kategori ekle</button>
+                            <table class="w-100 table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Kategori ID</th>
+                                        <th>Kategori adı</th>
+                                        <th>Seçenekler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.MasterCategories[i].Categories)
+                                    {
+                                        <tr id="@("row"+item.Id)">
+                                            <td>@item.Id</td>
+                                            <td>@item.Name</td>
+                                            <td>
+                                                <button id="btnSilAlt" onclick="DeleteAlt(@item.Id)" class="btn btn-danger text-white"><i class="fa fa-trash"></i></button>
+                                                <button id="btnEditAlt" data-toggle="modal" data-target="#editCategoryModal" onclick="EditCategoryModal(@item.Id)" class="btn btn-warning text-white"><i class="fa fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+        <div class="col">
+            <form asp-area="ritapanel" asp-action="AddMasterCategory" asp-controller="Category" enctype="multipart/form-data" method="post" class="w-100 mx-auto shadow pb-5 p-5">
+                <h4 class="text-center text-info">Yeni Kategori Ekle</h4>
+                <hr />
+                <div class="form-group">
+                    <label>Kategori adı</label>
+                    <input type="text" asp-for="MasterCategory.Name" class="form-control" />
+                    <span asp-validation-for="MasterCategory.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Sıralama</label>
+                    <input type="text" asp-for="MasterCategory.Index" class="form-control" />
+                    <span asp-validation-for="MasterCategory.Index" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Kategori görseli</label>
+                    <input type="file" asp-for="MasterCategory.PicturePath" name="McPicturePath" class="form-control" />
+                </div>
+                <button class="btn btn-outline-info btn-block" type="submit">Kaydet</button>
+            </form>
+            <hr />
+        </div>
+    </div>
+   
+</div>
+
+<div class="modal fade" id="editMasterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="MasterContent" class="modal-content">
+           //
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="AddCategoryContent" class="modal-content">
+            //
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="EditCategoryContent" class="modal-content">
+            //
+        </div>
+    </div>
+</div>
+
+@section Javascript{ 
+    <script>
+        $('#btnSil').click(function (e) {
+            e.preventDefault();
+            var conf = confirm("Silmek istediğinize emin misiniz?");
+            if (conf) {
+                $('#frmSil').submit();
+            }
+        });
+
+        function EditModal(id) {
+            $.ajax({
+                url: "/editmodal",
+                type: "Post",
+                data: { mcid: id },
+                success: function (res) {
+                    $('#MasterContent').html(res);
+                }
+            })
+        }
+        function EditCategoryModal(id) {
+            $.ajax({
+                url: "/editcategorymodal",
+                type: "Post",
+                data: { cid: id },
+                success: function (res) {
+                    $('#EditCategoryContent').html(res);
+                }
+            })
+        }
+        function AddCategoryModal(id) {
+            $.ajax({
+                url: "/addcategorymodal",
+                type: "Post",
+                data: { mcid: id },
+                success: function (res) {
+                    $('#AddCategoryContent').html(res);
+                }
+            })
+        }
+
+        function DeleteAlt(id) {
+            if (confirm("Bu kategoriyi silmek istediğinize emin misiniz? (Kategoriye ait tüm ürünler silinecektir) ")) {
+                $.ajax({
+                    url: "/deletecategory",
+                    type: "Post",
+                    data: { cid: id },
+                    success: function (res) {
+                        if (res) {
+                            $('#row' + id).remove();
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+}

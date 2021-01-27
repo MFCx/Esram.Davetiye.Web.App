@@ -1,0 +1,83 @@
+﻿@model List<Slider>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/ritapanel/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="container my-5 py-5">
+    <div class="row justify-content-center mb-3">
+        @foreach (var item in Model)
+        {
+            <div id="@("sindex-"+item.Id)" class="col text-center">
+                <h6 class=" text-info p-1">@item.Index</h6>
+                <a href="javascript:void(0)" onclick="ChangeSlider(@item.Id)"><img class="border border-info" src="~/@item.Path" width="200" alt="Alternate Text" /></a>
+            </div>
+        }
+        <div class="col text-center">
+            <a href="javascript:void(0)" class="text-center text-info d-block" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-plus fa-2x mt-md-5"></i><br />Yeni Ekle</a>
+        </div>
+    </div>
+    <div class="card w-100 mb-5" id="SelectedSlider">
+        @await Component.InvokeAsync("SliderCard")
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div id="ModalContent" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Slider ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="p-4" asp-area="ritapanel" asp-controller="Slider" asp-action="NewSlider" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label>Sıra numarası :</label>
+                    <input class="form-control" type="number" name="index" required />
+                </div>
+                <div class="form-group">
+                    <input class="form-control pb-2" type="file" name="path" required />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-outline-info btn-block" type="submit" value="Ekle" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Javascript{
+    <script>
+        function ChangeSlider(id) {
+            $.ajax({
+                url: '/changeslidercard',
+                type: 'post',
+                data: { sid: id },
+                success: function (res) {
+                    $('#SelectedSlider').html(res);
+                }
+            })
+        }
+
+        function DeleteSlider(id) {
+            if (confirm("Seçili sliderı silmek istediğinize emin misiniz?")) {
+                $.ajax({
+                    url: '/deleteslider',
+                    type: 'post',
+                    data: { sid: id },
+                    success: function (res) {
+                        if (res) {
+                            $('#sindex-' + id).remove();
+                            ChangeSlider(0);
+                        }
+                    }
+                })
+            }
+        }
+
+            
+    </script>
+}

@@ -1,0 +1,201 @@
+﻿@model Esram.Davetiye.Web.App.Models.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Anasayfa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var corp = CorporateSession.Corporate;
+}
+
+<style>
+    .carousel-indicators {
+        list-style: none;
+    }
+
+        .carousel-indicators li, .carousel-indicators li.active {
+            width: 160px;
+            height: 80px;
+            position: relative;
+            margin: 10px;
+            opacity: 1;
+            border: 1px solid white;
+            transition: width 0.4s;
+        }
+
+        .carousel-indicators img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .carousel-indicators li.active {
+            width: 180px;
+            border: 1px solid black;
+        }
+</style>
+
+<div class="ai-preloader active">
+    <div class="ai-preloader-inner h-100 d-flex align-items-center justify-content-center">
+        <div class="ai-child ai-bounce1"></div>
+        <div class="ai-child ai-bounce2"></div>
+        <div class="ai-child ai-bounce3"></div>
+    </div>
+</div>
+
+<!-- Main Wrapper Start -->
+
+<div class="wrapper">
+
+    <div id="content" class="main-content-wrapper">
+        <div id="carouselExampleIndicators" class="carousel slide carousel-fade mb-5 d-block" data-ride="carousel">
+            <ol class="carousel-indicators mx-auto rounded rounded-pill" style="z-index:3">
+                @{int j = 0;}
+                @foreach (var item in Model.Sliders)
+                {
+                    <li data-target="#carouselExampleIndicators" data-slide-to="@j" class="@(j==0?"active":"") d-none d-sm-block"><img src="~/@item.Path" alt="slider"></li>
+                    j++;
+                }
+            </ol>
+            <div class="carousel-inner">
+                @{int k = 0;}
+                @foreach (var item in Model.Sliders)
+                {
+                    <div class="carousel-item @(k==0?"active":"")">
+                        <img src="~/@item.Path" class="d-block w-100 slider-image img-fluid" alt="slider">
+                    </div>
+                    k++;
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        @*<section class="banner-area mb--70 mb-md--50">
+            <div class="container p-0">
+                <div class="row mb--40 mb-md--30">
+                    <div class="col-12 text-center">
+                        <h3 class="">Davetiye Çeşitlerimiz</h3>
+                        <hr class="separator center mt--25 mt-md--15">
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    @foreach (var item in Model.MasterCategories)
+                    {
+                        <div class="col text-center px-md-4">
+                            <a href="/davetiyeler/@item.Name">
+                                <img src="~/@item.PicturePath" />
+                            </a>
+                            <hr class="d-none d-sm-block" />
+                            <a href="/davetiyeler/@item.Name">
+                                <h4>@item.Name</h4>
+                            </a>
+                            <hr class="d-block d-sm-none" />
+                        </div>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </section>*@
+        <!-- Banner Area End Here -->
+        <!-- Product Section Start -->
+        @await Component.InvokeAsync("HomeBestArea")
+        <!-- Product Section End -->
+        <!-- Fullwide Banner area Start Here -->
+        <section class="fullwide-banner-area fullwide-banner-bg-2 pt--100 pt-md--70 pb--110 pb-md--80 mb--80 mb-md--60" style="background: url(@CorporateSession.Corporate.CampaignPath) no-repeat scroll center;">
+            <div class="container-fluid p-0">
+                <div class="row no-gutters">
+                    <div class="col-xl-6 col-lg-8 text-center">
+                        <h3 class="heading-tertiary" style="color:@corp.CampaignTextColor">@(corp.CampaignSmallText==""?"": corp.CampaignSmallText)</h3>
+                        <h2 class="heading-bigger font-weight-300 mb--40 mb-md--30" style="color:@corp.CampaignTextColor">@corp.CampaignBigText</h2>
+                        <a href="@corp.CampaignUrl" class="btn btn-3 btn-style-1 btn-medium">Hemen gözat</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Fullwide Banner area End Here -->
+        <!-- Product Tab area Start Here -->
+        <section class="product-tab-area mb--70 mb-md--50">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="product-tab tab-style-3">
+                            <div class="nav nav-tabs product-tab__head justify-content-center align-items-center flex-md-row flex-column mb--40 mb-md--30"
+                                 id="product-tab" role="tablist">
+                                @{byte i = 0;}
+                                @foreach (var mc in Model.MasterCategories)
+                                {
+                                    <a class="product-tab__link nav-link @(i==0?"active":"")" id="nav-new-arrival-tab"
+                                       data-toggle="tab" href="#nav-vip" onclick="ChangeTab(@mc.Id)" role="tab" aria-selected="true">
+                                        <span>@mc.Name</span>
+                                    </a>
+                                    i++;
+                                }
+                            </div>
+                            <div class="tab-content product-tab__content" id="product-tabContent">
+                                <div class="tab-pane fade show active" id="nav-vip" role="tabpanel"
+                                     aria-labelledby="nav-new-arrival-tab">
+                                    @await Component.InvokeAsync("HomeTabArea")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col-12 text-center">
+                        <a href="shop-sidebar.html" class="heading-button">Tümünü Gör</a>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+        <!-- Product Tab area End Here -->
+    </div>
+</div>
+
+<div class="modal fade product-modal" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="dl-icon-close"></i></span>
+                </button>
+                <div id="productModalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Javascript{
+    <script>
+        function ChangeTab(id) {
+            $.ajax({
+                url: "/changetab",
+                type: "Post",
+                data: { mcid: id },
+                success: function (res) {
+                    $('#nav-vip').html(res);
+                }
+            })
+        }
+
+        function ChangeProductModal(id) {
+            $.ajax({
+                url: "/changeproductmodal",
+                type: "post",
+                data: { pid: id },
+                success: function (res) {
+                    $('#productModalContent').html(res);
+                }
+            })
+        }
+    </script>
+}

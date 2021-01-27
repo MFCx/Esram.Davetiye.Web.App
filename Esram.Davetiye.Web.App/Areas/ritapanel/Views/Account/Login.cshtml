@@ -1,0 +1,38 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Rita Yönetim Paneli</title>
+</head>
+<body>
+    <div class="justify-content-center mt-5 pt-5">
+        <div class="text-center">
+            <img width="300" src="~/@Esram.Davetiye.Web.App.Manage.Sessions.CorporateSession.Corporate.LogoPath" />
+        </div>
+    </div>
+    <form class="form w-50 mx-auto shadow p-4 bg-light" asp-action="Login" asp-controller="Account" asp-area="ritapanel" method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label asp-for="@Model.Username"></label>
+            <input type="text" asp-for="@Model.Username" placeholder="Kullanıcı adı" class="form-control" required />
+            <span asp-validation-for="@Model.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Password"></label>
+            <input type="password" asp-for="@Model.Password" placeholder="Şifre" class="form-control" required />
+            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary form-control">Giriş</button>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿@model List<Esram.Davetiye.Web.App.Models.Entities.Product>
+<div class="section-wrapper mb--80 mb-md--60">
+    <div class="container-fluid">
+        <div class="row mb--40 mb-md--30">
+            <div class="col-12 text-center">
+                <h3>Çok Tercih Edilenler</h3>
+                <hr class="separator center mt--25 mt-md--15">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="airi-element-carousel dot-style-1 slick-dot-mb-30" data-slick-options='{
+                                "spaceBetween": 30,
+                                "slidesToShow": 4,
+                                "slidesToScroll": 1,
+                                "dots": true
+                            }' data-slick-responsive='[
+                                {"breakpoint": 991, "settings": {"slidesToShow": 3}},
+                                {"breakpoint": 767, "settings": {"slidesToShow": 2}},
+                                {"breakpoint": 575, "settings": {"slidesToShow": 1}}
+                            ]'>
+                    @foreach (var p in Model)
+                    {
+                        <div class="item">
+                            <div class="airi-product airi-product--2">
+                                <div class="product-inner">
+                                    <figure class="product-image">
+                                        <div class="product-image--holder">
+                                            <a href="/davetiyeler/@p.Category.MasterCategory.Name.ToLower()/@p.Category.Name.ToLower()/@p.Code">
+                                                <img src="~/@p.MainPicture"
+                                                     alt="Product Image" class="primary-image">
+                                                <img src="~/@p.MainPicture"
+                                                     alt="Product Image" class="secondary-image">
+                                            </a>
+                                        </div>
+                                        <div class="airi-product-action">
+                                            <div class="product-action">
+                                                <a onclick="ChangeProductModal(@p.Id)" class="quickview-btn action-btn" data-toggle="tooltip"
+                                                   data-placement="top" title="Önizleme">
+                                                    <span data-toggle="modal" data-target="#productModal">
+                                                        <i class="dl-icon-view"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </figure>
+                                    <div class="product-info">
+                                        <h3 class="product-title">
+                                            <a href="/davetiyeler/@p.Category.MasterCategory.Name.ToLower()/@p.Category.Name.ToLower()/@p.Code">@p.Name (@p.Code)</a>
+                                        </h3>
+                                        <span class="product-price-wrapper">
+                                            <span class="money">@p.Price</span>
+                                        </span>
+                                    </div>
+                                    <div class="product-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

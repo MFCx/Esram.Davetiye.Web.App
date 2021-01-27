@@ -1,0 +1,80 @@
+﻿@model List<Esram.Davetiye.Web.App.Models.Entities.MasterCategory>
+<footer class="footer footer-3 bg--white border-top">
+    <div class="container">
+        <div class="row pt--40 pt-md--30 mb--40 mb-sm--30">
+            <div class="col-12 text-md-center">
+                <div class="footer-widget">
+                    <div class="textwidget">
+                        <a href="/" class="footer-logo">
+                            <img height="100" src="~/@CorporateSession.Corporate.LogoPath" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb--40 mb-sm--20 justify-content-center">
+            <div class="col-xl-2 col-md-4 mb-lg--30">
+                <div class="footer-widget">
+                    <h3 class="widget-title widget-title--2">Menü</h3>
+                    <ul class="widget-menu widget-menu--2">
+                        <li><a href="/kurumsal">Kurumsal</a></li>
+                        <li><a href="/iletisim">İletişim</a></li>
+                        <li><a href="/sikca-sorulan-sorular">S.S.S</a></li>
+                    </ul>
+                </div>
+            </div>
+            @foreach (var mc in Model)
+            {
+                <div class="col-xl-2 col-md-4 mb-lg--30">
+                    <div class="footer-widget">
+                        <a href="/davetiyeler/@mc.Name.ToLower()"><h3 class="widget-title widget-title--2">@mc.Name</h3></a>
+                        <ul class="widget-menu widget-menu--2">
+                            @foreach (var c in mc.Categories)
+                            {
+                                <li><a href="/davetiyeler/@mc.Name.ToLower()/kategori/@c.Name.ToLower()">@c.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <hr />
+        <div class="row align-items-center pt--10 pb--30">
+            <div class="col-md-4">
+                <!-- Social Icons Start Here -->
+                <ul class="social social-small">
+                    <li class="social__item">
+                        <a target="_blank" href="@CorporateSession.Corporate.Instagram" class="social__link">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li class="social__item">
+                        <a target="_blank" href="@CorporateSession.Corporate.Facebook" class="social__link">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="social__item">
+                        <a target="_blank" href="https://wa.me/@CorporateSession.Corporate.Whatsapp" class="social__link">
+                            <i class="fa fa-whatsapp"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Social Icons End Here -->
+            </div>
+            <div class="col-md-4 text-md-center">
+                <p class="copyright-text">&copy; 2020 ESRAMDAVETİYE. <br /> <a href="https://ritabilisim.com">Rita Bilişim</a> Tarafından Geliştirilmiştir</p>
+            </div>
+            <div class="col-md-4 text-md-right">
+                <img src="~/assets/img/others/payments-2.png" alt="Payment">
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer End -->
+<!-- Search from Start -->
+<!-- Mini Cart End -->
+<!-- Global Overlay Start -->
+<!-- Global Overlay End -->
+<!-- Modal Start -->
+<!-- Modal End -->

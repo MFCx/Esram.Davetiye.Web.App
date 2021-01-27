@@ -1,0 +1,117 @@
+﻿@model Esram.Davetiye.Web.App.Models.ViewModels.ContactViewModel
+@{
+    ViewData["Title"] = "İletişim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var corporate = CorporateSession.Corporate;
+}
+
+<div class="breadcrumb-area bg--white-6 pt--60 pb--70 pt-lg--40 pb-lg--50 pt-md--30 pb-md--40">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">İletişim</h1>
+                <ul class="breadcrumb justify-content-center">
+                    <li><a href="/">Anasayfa</a></li>
+                    <li class="current"><span>İletişim</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div id="content" class="main-content-wrapper">
+        <div class="page-content-inner">
+            <div class="container">
+                <div class="row pt--50 pt-md--30 pt-sm--20 pb--40 pb-md--30 pb-sm--15">
+                    <div class="col-md-7 mb-sm--30">
+                        <h2 class="heading-secondary mb--50 mb-md--35 mb-sm--20">Mesaj gönder</h2>
+                        <!-- Contact form Start Here -->
+                        <form class="form" asp-action="Contact" asp-controller="Common" method="post">
+                            @Html.AntiForgeryToken()
+                            <div class="form__group mb--20">
+                                <input type="text" id="contact_name" asp-for="Name"
+                                       class="form__input form__input--2" placeholder="Ad soyad*" required>
+                            </div>
+                            <div class="form__group mb--20">
+                                <input type="email" id="contact_email" asp-for="Email"
+                                       class="form__input form__input--2" placeholder="Email adresi*" required>
+                            </div>
+                            <div class="form__group mb--20">
+                                <input type="text" id="contact_phone" asp-for="Phone"
+                                       class="form__input form__input--2" placeholder="Telefon numarası (opsiyonel)">
+                            </div>
+                            <div class="form__group mb--20">
+                                <input type="text" id="contact_phone" asp-for="Subject"
+                                       class="form__input form__input--2" placeholder="Konu*" required>
+                            </div>
+                            <div class="form__group mb--20">
+                                <textarea class="form__input form__input--textarea" id="contact_message"
+                                          asp-for="Message" placeholder="Mesaj*" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-secondary btn-block" type="submit">Gönder</button>
+                            </div>
+                        </form>
+
+                        <!-- Contact form end Here -->
+
+                    </div>
+                    <div class="col-md-5 col-xl-4 offset-xl-1">
+                        <h2 class="heading-secondary mb--50 mb-md--35 mb-sm--20">İletişim Bilgileri</h2>
+
+                        <!-- Contact info widget start here -->
+                        <div class="contact-info-widget mb--45 mb-sm--35">
+                            <div class="contact-info">
+                                <h3><i class="fa fa-map-marker"></i> Adres</h3>
+                                <p>@corporate.Address</p>
+                            </div>
+                        </div>
+                        <!-- Contact info widget end here -->
+                        <!-- Contact info widget start here -->
+                        <div class="contact-info-widget two-column-list sm-one-column mb--45 mb-sm--35">
+                            <div class="contact-info mb-sm--35">
+                                <h3><i class="fa fa-phone"></i> Telefon</h3>
+                                <a href="tel:@corporate.Phone">@corporate.Phone</a>
+                            </div>
+                            <div class="contact-info">
+                                <h3><i class="fa fa-envelope"></i> Email</h3>
+                                <a href="mailto:@corporate.Email">@corporate.Email</a>
+                            </div>
+                        </div>
+                        <!-- Contact info widget end here -->
+                        <!-- Social Icons Start Here -->
+                        <ul class="social body-color">
+                            <li class="social__item">
+                                <a target="_blank" href="@corporate.Instagram" class="social__link">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="social__item">
+                                <a target="_blank" href="@corporate.Facebook" class="social__link">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="social__item">
+                                <a target="_blank" href="https://wa.me/@corporate.Whatsapp" class="social__link">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Social Icons End Here -->
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid p-0">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div id="google-map" style="position:relative; overflow:hidden;">
+                            <iframe src="@corporate.MapCode" frameborder="0" style="border:0; width:100%" height="450" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

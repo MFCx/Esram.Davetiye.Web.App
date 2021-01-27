@@ -1,0 +1,107 @@
+﻿@model CreateProductViewModel
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Areas/ritapanel/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="container my-5 py-5">
+
+    <form id="frmCreateProduct" class="w-100 mx-auto" enctype="multipart/form-data" asp-action="CreateProduct" asp-controller="Product" asp-area="ritapanel" method="post">
+        @if (ViewBag.Success != null)
+        {
+            <h6 id="successMsg" class="text-center text-success">@ViewBag.Success <i class="fa fa-check"></i></h6>
+        }
+        <div class="form-group text-right">
+            <button class="btn btn-outline-info" type="submit"><i class="fa fa-save"></i> Kaydet</button>
+        </div>
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="form-row">
+            <div class="form-group col">
+                <select class="form-control" id="mcSelect">
+                    <option value="0" selected disabled>Ana kategori seçiniz</option>
+                    @foreach (var mc in Model.MasterCategories)
+                    {
+                        <option value="@mc.Id">@mc.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col">
+                <select asp-for="Product.CategoryId" class="form-control" id="cSelect">
+                    <option value="0" selected disabled>Alt kategori seçiniz</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-check-label" asp-for="Product.IsBest"></label>
+            <input class="form-check-input ml-2" type="checkbox" asp-for="Product.IsBest" />
+            <span asp-validation-for="Product.IsBest" class="text-danger"></span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label asp-for="Product.MainPicture"></label>
+                <input type="file" name="MainPicture" asp-for="Product.MainPicture" />
+                <span class="text-danger" asp-validation-for="Product.MainPicture"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Product.Pictures"></label>
+                <input type="file" name="Pictures" multiple asp-for="Product.Pictures" />
+                <span class="text-danger" asp-validation-for="Product.Pictures"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Product.Name"></label>
+            <input class="form-control" type="text" asp-for="Product.Name" />
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Product.Code"></label>
+            <input class="form-control" type="text" asp-for="Product.Code" />
+            <span asp-validation-for="Product.Code" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Product.Price"></label>
+            <input class="form-control" type="text" asp-for="Product.Price" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Product.Description"></label>
+            <textarea name="Product.Description" class="form-control" rows="5" asp-for="Product.Description"></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-right">
+            <button class="btn btn-outline-info" type="submit"><i class="fa fa-save"></i> Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Javascript{
+    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Product.Description');
+    </script>
+    <script>
+        $('#mcSelect').change(function () {
+            $.ajax({
+                url: "/getcatbymaster",
+                type: "post",
+                dataType: "json",
+                data: { mcid: $('#mcSelect option:selected').val() },
+                success: function (res) {
+                    document.getElementById('cSelect').innerHTML = '<option value="0" selected disabled>Alt kategori seçiniz</option>';
+                    for (var i = 0; i < res.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.value = res[i].id;
+                        opt.text = res[i].name;
+                        document.getElementById('cSelect').appendChild(opt);
+                    }
+                }
+            })
+        })
+
+        $('#frmCreateProduct').submit(function () {
+            $('#successMsg').remove();
+        })
+    </script>
+}

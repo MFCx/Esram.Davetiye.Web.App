@@ -1,0 +1,127 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "EditProduct";
+    Layout = "~/Areas/ritapanel/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="container my-5 py-5">
+
+    <form class="w-100 mx-auto" asp-action="EditProduct" asp-controller="Product" asp-area="ritapanel" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="MainPicture" />
+        <input type="hidden" asp-for="CategoryId" />
+        @if (ViewBag.Success!=null)
+        {
+            <h6 class="text-center text-success">@ViewBag.Success <i class="fa fa-check"></i></h6>
+        }
+        @if (ViewBag.Error != null)
+        {
+            <h6 class="text-center text-danger">@ViewBag.Error <i class="fa fa-warning"></i></h6>
+        }
+        <div class="form-group text-right">
+            <button class="btn btn-outline-info" type="submit"><i class="fa fa-save"></i> Değişiklikleri Kaydet</button>
+        </div>
+
+        @*<div class="form-group">
+                    <label asp-for="MainPicture"></label>
+                    <input class="form-control" type="file" name="MainPicture" asp-for="MainPicture" />
+            </div>*@
+        <div class="form-group">
+            <label class="form-check-label" asp-for="IsBest"></label>
+            <input class="form-check-input ml-2" type="checkbox" asp-for="IsBest" />
+            <span asp-validation-for="IsBest" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button data-toggle="modal" data-target="#ImagesModal" type="button" class="btn btn-outline-info btn-block"><i class="fa fa-image"></i> Ürün Görsellerini Düzenle</button>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input class="form-control" type="text" asp-for="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Code"></label>
+            <input class="form-control" type="text" asp-for="Code" />
+            <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input class="form-control" type="text" asp-for="Price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea name="Description" class="form-control" rows="5" asp-for="Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+    </form>
+</div>
+<div id="ImagesModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+
+        <div id="ImagesModalContent" class="modal-content px-5 pb-5">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ürün Resimleri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-area="ritapanel" asp-action="EditPictures" asp-controller="Product" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="productId" value="@Model.Id" />
+                <div class="py-3">
+                    <h6>Kapak Resmi</h6>
+                    <img width="150" src="~/@Model.MainPicture" alt="Alternate Text" />
+                    <div class="form-group mt-2">
+                        <input id="inputMainPic" class="form-control-file" type="file" name="MainPicture" />
+                    </div>
+                </div>
+                <hr />
+                <h6>Diğer Resimler</h6>
+                <div class="row mt-2">
+                    @foreach (var item in Model.Pictures)
+                    {
+                        <div id="card-@item.Id" class="card mx-1" style="width: 7rem;">
+                            <img src="~/@item.Path" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text text-center">
+                                    <button onclick="DeleteGallery(@item.Id)" type="button" class="btn btn-danger btn-sm" style="font-size:10px;"><i class="fa fa-trash"></i></button>
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="form-group mt-2">
+                    <input id="inputGalleryPics" class="form-control-file" multiple type="file" name="Pictures" />
+                </div>
+                <hr />
+                <div class="row mt-2">
+                    <input type="submit" class="btn btn-outline-info btn-block" value="Kaydet" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Javascript{
+    <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Description');
+    </script>
+    <script>
+        function DeleteGallery(id) {
+            $.ajax({
+                url: '/delete-gallery',
+                type: 'post',
+                data: { gid: id },
+                success: function (res) {
+                    if (res) {
+                        $('#card-' + id).remove();
+                    }
+                }
+            })
+        }
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@model List<Esram.Davetiye.Web.App.Models.Entities.Faq>
+@{
+    ViewData["Title"] = "S.S.S";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-area bg--white-6 pt--60 pb--70 pt-lg--40 pb-lg--50 pt-md--30 pb-md--40">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">Sıkça Sorulan Sorular</h1>
+                <ul class="breadcrumb justify-content-center">
+                    <li><a href="/">Anasayfa</a></li>
+                    <li class="current"><span>S.S.S</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div id="content" class="main-content-wrapper">
+        <div class="page-content-inner">
+            <div class="container-fluid p-0">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <div class="text-center mt-md-5 pt-5"><img class="max-w-100 max-w-sm-25 mt-5" src="~/static/img/faq.png" alt="Alternate Text" /></div>
+                    </div>
+                    <div class="col-md-8 mt--100 mt-lg--80 mt-md--60 pb--5">
+                        <div class="accordion-container">
+                            <div class="row">
+                                @{int i = 0;}
+                                @foreach (var faq in Model)
+                                {
+                                    <div class="accordion__single mb--100 mb-lg--75 mb-md--55 mb-sm--40 col-12 col-sm-6">
+                                        <div class="accordion__header" id="headingOne">
+                                            <a class="accordion__link" data-target="@("#accordion"+i)">
+                                                @faq.Title
+                                            </a>
+                                        </div>
+                                        <div id="@("accordion"+i)" class="accordion__body">
+                                            <div class="accordion__text">
+                                                @faq.Content
+                                            </div>
+                                        </div>
+                                    </div>
+                                    i++;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div class="cta bg-light d-flex justify-content-center align-items-center flex-wrap ptb--70 ptb-sm--50">
+                            <h4 class="color--dark mr--30 mr-xs--5">
+                                Eğer sorunuzun cevabını bulamadıysanız hemen bizimle irtibata geçin.
+                            </h4>
+                            <a href="/iletisim" class="btn btn-medium btn-style-4">İletişim</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

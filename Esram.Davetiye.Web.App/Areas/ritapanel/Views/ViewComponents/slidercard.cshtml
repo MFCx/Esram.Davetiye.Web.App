@@ -1,0 +1,35 @@
+﻿@model Slider
+@if (Model != null)
+{
+    <div class="row pr-md-2">
+        <div class="col-md-10">
+            <form id="frmEdit" asp-area="ritapanel" asp-controller="Slider" asp-action="EditSlider" enctype="multipart/form-data" method="post">
+                <div class="form-row pt-md-2 pl-md-2">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="currentpath" value="@Model.Path" />
+                    <div class="form-group col-md-1">
+                        <input class="form-control" type="number" name="index" value="@Model.Index" />
+                    </div>
+                    <div class="form-group col-md-2 pt-md-1">
+                        <input class="form-control-file" type="file" name="path" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input class="form-control btn btn-outline-info" id="btnEdit" type="submit" value="Güncelle" />
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-md-1 offset-md-1 text-right pt-md-2">
+            <button onclick="DeleteSlider(@Model.Id)" class="btn btn-danger text-white"><i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+    @*<div class="card-body p-0 text-center">
+            <h5 class="card-title badge-light p-1">
+
+                <button class="btn btn-warning btn-sm text-white"><i class="fa fa-edit"></i></button>
+
+            </h5>
+        </div>*@
+    <img src="~/@Model.Path" class="card-img-bottom" alt="...">
+}

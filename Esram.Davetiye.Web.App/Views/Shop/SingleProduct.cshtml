@@ -1,0 +1,188 @@
+﻿@model Esram.Davetiye.Web.App.Models.Entities.Product
+@{
+    ViewData["Title"] = Model.Code;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Style{
+    <style>
+        .action-btn:hover {
+            cursor: pointer
+        }
+    </style>
+}
+
+<div class="breadcrumb-area bg--white-6 pt--60 pb--70 pt-lg--40 pb-lg--50 pt-md--30 pb-md--40">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">@Model.Name (@Model.Code) </h1>
+                <ul class="breadcrumb justify-content-center">
+                    <li><a href="/">Anasayfa</a></li>
+                    <li class="current"><span>Davetiyeler</span></li>
+                    <li><a href="/davetiyeler/@Model.Category.MasterCategory.Name.ToLower()">@Model.Category.MasterCategory.Name</a></li>
+                    <li><a href="/davetiyeler/@Model.Category.MasterCategory.Name.ToLower()/kategori/@Model.Category.Name.ToLower()">@Model.Category.Name</a></li>
+                    <li class="current"><span>@Model.Code</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div id="content" class="main-content-wrapper">
+        <div class="page-content-inner enable-full-width">
+            <div class="container-fluid">
+                <div class="row pt--40 pb--50">
+                    <div class="col-md-6 product-main-image">
+                        <div class="product-image">
+                            <div class="product-gallery vertical-slide-nav">
+                                <div class="product-gallery__thumb">
+                                    <div class="product-gallery__thumb--image">
+                                        <div class="airi-element-carousel nav-slider slick-vertical"
+                                             data-slick-options='{
+                                                "slidesToShow": 3,
+                                                "slidesToScroll": 1,
+                                                "vertical": true,
+                                                "swipe": true,
+                                                "verticalSwiping": true,
+                                                "infinite": true,
+                                                "focusOnSelect": true,
+                                                "asNavFor": ".main-slider",
+                                                "arrows": true,
+                                                "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "fa fa-angle-up" },
+                                                "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "fa fa-angle-down" }
+                                            }'
+                                             data-slick-responsive='[
+                                                {
+                                                    "breakpoint":992,
+                                                    "settings": {
+                                                        "slidesToShow": 4,
+                                                        "vertical": false
+                                                    }
+                                                },
+                                                {
+                                                    "breakpoint":575,
+                                                    "settings": {
+                                                        "slidesToShow": 3,
+                                                        "vertical": false
+                                                    }
+                                                },
+                                                {
+                                                    "breakpoint":480,
+                                                    "settings": {
+                                                        "slidesToShow": 2,
+                                                        "vertical": false
+                                                    }
+                                                }
+                                            ]'>
+                                            <figure class="product-gallery__thumb--single">
+                                                <img src="~/@Model.MainPicture" alt="Products">
+                                            </figure>
+                                            @foreach (var item in Model.Pictures)
+                                            {
+                                                <figure class="product-gallery__thumb--single">
+                                                    <img src="~/@item.Path" alt="Products">
+                                                </figure>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-gallery__large-image">
+                                    <div class="gallery-with-thumbs">
+                                        <div class="product-gallery__wrapper">
+                                            <div class="airi-element-carousel main-slider product-gallery__full-image image-popup"
+                                                 data-slick-options='{
+                                                    "slidesToShow": 1,
+                                                    "slidesToScroll": 1,
+                                                    "infinite": true,
+                                                    "arrows": false,
+                                                    "asNavFor": ".nav-slider"
+                                                }'>
+                                                <figure class="product-gallery__image action-btn btn-zoom-popup">
+                                                    <img src="~/@Model.MainPicture" alt="Products">
+                                                </figure>
+                                                @foreach (var item in Model.Pictures)
+                                                {
+                                                    <figure class="product-gallery__image action-btn btn-zoom-popup">
+                                                        <img src="~/@item.Path" alt="Products">
+                                                    </figure>
+                                                }
+
+                                            </div>
+                                            <div class="product-gallery__actions">
+                                                <button class="action-btn btn-zoom-popup">
+                                                    <i class="dl-icon-zoom-in"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 product-main-details mt--40 mt-md--10 mt-sm--30">
+                        <div class="product-summary">
+                            <div class="clearfix"></div>
+                            <h3 class="product-title">@Model.Name</h3>
+                            <p class="product-short-description mb--10 mb-sm--20">
+                                <b>Fiyat : </b>@Model.Price
+                            </p>
+                            <p class="product-short-description mb--10 mb-sm--20">
+                                <b>Ürün kodu : </b>@Model.Code
+                            </p>
+                            <p class="product-short-description mb--10 mb-sm--20">
+                                <b>Marka : </b>@Model.Category.Name
+                            </p>
+                            <div class="clearfix"></div>
+                            <p class="product-short-description mb--45 mb-sm--20">
+                                <b>Ürün açıklaması : </b>@Html.Raw(Model.Description)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @await Component.InvokeAsync("HomeBestArea")
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade product-modal" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="dl-icon-close"></i></span>
+                </button>
+                <div id="productModalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Javascript{
+    <script>
+        function ChangeTab(id) {
+            $.ajax({
+                url: "/changetab",
+                type: "Post",
+                data: { mcid: id },
+                success: function (res) {
+                    $('#nav-vip').html(res);
+                }
+            })
+        }
+
+        function ChangeProductModal(id) {
+            $.ajax({
+                url: "/changeproductmodal",
+                type: "post",
+                data: { pid: id },
+                success: function (res) {
+                    $('#productModalContent').html(res);
+                }
+            })
+        }
+    </script>
+}

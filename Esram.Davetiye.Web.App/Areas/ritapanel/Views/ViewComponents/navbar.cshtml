@@ -1,0 +1,54 @@
+﻿@model ChangePasswordViewModel
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/ritapanel"><img height="100" src="~/@Esram.Davetiye.Web.App.Manage.Sessions.CorporateSession.Corporate.LogoPath" alt="Alternate Text" /></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link mr-md-5 ml-md-5" href="/"><i class="fa fa-home text-info"></i> Siteye Git</a>
+            <a class="nav-item nav-link d-none d-sm-block" href="/ritapanel"><i class="fa fa-info text-info"></i> Kurumsal</a>
+            <a class="nav-item nav-link" href="/ritapanel/kategoriler"><i class="fa fa-list text-info"></i> Kategoriler</a>
+            <a class="nav-item nav-link" href="/ritapanel/davetiyeler"><i class="fa fa-book text-info"></i> Davetiyeler</a>
+            <a class="nav-item nav-link" href="/ritapanel/slider"><i class="fa fa-image text-info"></i> Slider Yönetimi</a>
+            <a class="nav-item nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#changePasswordModal"><i class="fa fa-user text-info"></i> Şifre Değiştir</a>
+            <a class="nav-item nav-link text-danger d-none d-sm-block" href="/cikis"><i class="fa fa-sign-out"></i> Çıkış</a>
+        </div>
+    </div>
+</nav>
+
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="ModalContent" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Şifre değiştir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @*<form class="p-4" asp-area="ritapanel" asp-controller="Account" asp-action="ChangePassword" enctype="multipart/form-data" method="post">*@
+            <div class="p-3">
+                <div class="form-group">
+                    <label>Mevcut şifre :</label>
+                    <input class="form-control" type="password" id="currentPassword" required />
+                </div>
+                <div class="form-group">
+                    <label>Yeni şifre :</label>
+                    <input class="form-control" type="password" id="password" required />
+                </div>
+                <div class="form-group">
+                    <label>Yeni şifre tekrar :</label>
+                    <input class="form-control" type="password" id="confirmPassword" required />
+                </div>
+                <div class="form-group">
+                    <span class="text-danger" id="errorMessage"></span>
+                    <span class="text-success" id="successMessage"></span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-info btn-block" id="btnChangePassword">Güncelle</button>
+                </div>
+            </div>
+            @*</form>*@
+        </div>
+    </div>
+</div>

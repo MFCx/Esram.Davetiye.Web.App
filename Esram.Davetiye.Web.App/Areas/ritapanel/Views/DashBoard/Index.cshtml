@@ -1,0 +1,115 @@
+﻿@model Corporate
+@{
+    Layout = "~/Areas/ritapanel/Views/Shared/_Layout.cshtml";
+}
+<hr />
+<div class="container my-5 py-5">
+    <form class="w-100 mx-auto shadow p-5" enctype="multipart/form-data" asp-action="Index" asp-controller="Dashboard" asp-area="ritapanel" method="post">
+        <fieldset class="bg-dark p-3">
+            <h4 class="text-center text-white">Firma Bilgileri</h4>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="CompanyName" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="CompanyName" />
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Instagram" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="Instagram" />
+                    <span asp-validation-for="Instagram" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Facebook" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="Facebook" />
+                    <span asp-validation-for="Facebook" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Whatsapp" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="Whatsapp" />
+                    <span asp-validation-for="Whatsapp" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Phone" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="Phone" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col">
+                    <label asp-for="Email" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="text-white"></label>
+                <textarea rows="3" class="form-control" type="text" asp-for="Address" style="resize:none"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MapCode" class="text-white"></label>
+                <input class="form-control" type="text" asp-for="MapCode" />
+                <span asp-validation-for="MapCode" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                <label class="text-white">Hakkımızda (<a target="_blank" href="https://html-online.com/editor/">BU LİNK</a> aracılığı ile içerik oluşturup copy paste yapabilirsiniz) :</label>
+                <textarea rows="10" class="form-control" type="text" asp-for="AboutText" style="resize:none"></textarea>
+                <span asp-validation-for="AboutText" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="LogoPath" class="text-white"></label>
+                    <input class="form-control" name="LogoPath" type="file" />
+                </div>
+
+                <div class="form-group col">
+                    <label asp-for="IconPath" class="text-white"></label>
+                    <input class="form-control" name="IconPath" type="file" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="bg-info p-3">
+            <h4 class="text-center text-white">Kampanya Banner Alanı</h4>
+            <hr />
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="CampaignSmallText" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="CampaignSmallText" />
+                    <span asp-validation-for="CampaignSmallText" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="CampaignBigText" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="CampaignBigText" />
+                    <span asp-validation-for="CampaignBigText" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="CampaignUrl" class="text-white"></label>
+                    <input class="form-control" type="text" asp-for="CampaignUrl" />
+                    <span asp-validation-for="CampaignUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="CampaignPath" class="text-white"></label>
+                    <input class="form-control" name="CampaignPath" type="file" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampaignTextColor" class="text-white"></label>
+                <input class="form-control" type="color" asp-for="CampaignTextColor" />
+                <span asp-validation-for="CampaignTextColor" class="text-danger"></span>
+            </div>
+        </fieldset>
+        <hr />
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-secondary btn-block">Değişiklikleri kaydet</button>
+        </div>
+    </form>
+</div>
+
+

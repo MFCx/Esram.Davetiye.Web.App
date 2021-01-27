@@ -1,0 +1,214 @@
+﻿@model List<Esram.Davetiye.Web.App.Models.Entities.MasterCategory>
+<style>
+    .mm-text, .dl-menu li a {
+        font-family: 'Baloo Tammudu 2', cursive;
+        font-size: 18px;
+    }
+</style>
+<header class="header header-fullwidth header-style-1">
+    <div class="header-outer">
+        <div class="header-inner fixed-header py-0">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-xl-5 col-lg-6">
+                        <!-- Main Navigation Start Here -->
+                        <nav class="main-navigation">
+                            <ul class="mainmenu">
+                                <li class="mainmenu__item">
+                                    <a href="/" class="mainmenu__link">
+                                        <span class="mm-text"><i class="fa fa-home fa-2x"></i></span>
+                                    </a>
+                                </li>
+                                <li class="mainmenu__item">
+                                    <a href="/kurumsal" class="mainmenu__link">
+                                        <span class="mm-text">Kurumsal</span>
+                                    </a>
+                                </li>
+                                <li class="mainmenu__item menu-item-has-children has-children">
+                                    <a href="javascript:void(0)" class="mainmenu__link">
+                                        <span class="mm-text">Davetiyeler</span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        @foreach (var mc in Model)
+                                        {
+                                            <li class="menu-item-has-children has-children">
+                                                <a href="/davetiyeler/@mc.Name.ToLower()">
+                                                    <span class="mm-text">@mc.Name</span>
+                                                </a>
+                                                <ul class="sub-menu">
+                                                    @foreach (var c in mc.Categories)
+                                                    {
+                                                        <li>
+                                                            <a href="/davetiyeler/@mc.Name.ToLower()/kategori/@c.Name.ToLower()">
+                                                                <span class="mm-text">@c.Name</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                                <li class="mainmenu__item">
+                                    <a href="/iletisim" class="mainmenu__link">
+                                        <span class="mm-text">İletişim</span>
+                                    </a>
+                                </li>
+                                <li class="mainmenu__item">
+                                    <a href="/sikca-sorulan-sorular" class="mainmenu__link">
+                                        <span class="mm-text">S.S.S</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- Main Navigation End Here -->
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-4 text-lg-center">
+                        <!-- Logo Start Here -->
+                        <a href="/" class="logo-box">
+                            <figure class="logo--normal">
+                                @*<img src="~/assets/img/logo/logo.svg" alt="Logo" />*@
+                                <img height="100" src="~/@CorporateSession.Corporate.LogoPath" />
+                                @*<h2><b>ESRAM</b>DAVETİYE</h2>*@
+                            </figure>
+                            <figure class="logo--transparency">
+                                <img height="100" src="~/@CorporateSession.Corporate.LogoPath" />
+                                @*<h2><b>ESRAM</b>DAVETİYE</h2>*@
+                            </figure>
+                        </a>
+                        <!-- Logo End Here -->
+                    </div>
+                    <div class="col-xl-5 col-lg-4 col-md-9 col-8">
+                        <ul class="header-toolbar text-right">
+                            <li class="header-toolbar__item user-info-menu-btn">
+                                <a target="_blank" href="tel:@CorporateSession.Corporate.Phone">
+                                    <i class="fa fa-phone"></i>
+                                </a>
+                            </li>
+                            <li class="header-toolbar__item user-info-menu-btn">
+                                <a target="_blank" href="@CorporateSession.Corporate.Instagram">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </li>
+                            @if (!String.IsNullOrEmpty(CorporateSession.Corporate.Facebook))
+                            {
+                                <li class="header-toolbar__item">
+                                    <a target="_blank" href="@CorporateSession.Corporate.Facebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                            }
+                            <li class="header-toolbar__item">
+                                <a target="_blank" href="https://wa.me/@CorporateSession.Corporate.Whatsapp">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+                            </li>
+                            <li class="header-toolbar__item d-lg-none">
+                                <a href="javascript:void(0)" class="menu-btn"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header Area End -->
+<!-- Mobile Header area Start -->
+<header class="header-mobile">
+    <div class="header-mobile__outer">
+        <div class="header-mobile__inner fixed-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <a href="/" class="logo-box">
+                            <figure class="logo--normal">
+                                <img src="~/static/esram-logo.png" alt="Alternate Text" />
+                            </figure>
+                        </a>
+                    </div>
+                    <div class="col-8">
+                        <ul class="header-toolbar text-right">
+                            <li class="header-toolbar__item user-info-menu-btn">
+                                <a target="_blank" href="@CorporateSession.Corporate.Instagram">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="header-toolbar__item">
+                                <a target="_blank" href="@CorporateSession.Corporate.Facebook">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="header-toolbar__item">
+                                <a target="_blank" href="https://wa.me/@CorporateSession.Corporate.Whatsapp">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+                            </li>
+                            <li class="header-toolbar__item d-lg-none">
+                                <a href="javascript:void(0)" class="menu-btn"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Mobile Navigation Start Here -->
+                        <div class="mobile-navigation dl-menuwrapper" id="dl-menu">
+                            <button class="dl-trigger">Open Menu</button>
+                            <ul class="dl-menu">
+                                <li>
+                                    <a href="/">
+                                        Anasayfa
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/kurumsal">
+                                        Kurumsal
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        Davetiyeler
+                                        <span class="tip">Hot</span>
+                                    </a>
+                                    <ul class="dl-submenu">
+                                        @foreach (var mc in Model)
+                                        {
+                                            <li>
+                                                <a class="megamenu-title" href="/davetiyeler/@mc.Name.ToLower()">
+                                                    @mc.Name
+                                                </a>
+                                                <ul class="dl-submenu">
+                                                    @foreach (var c in mc.Categories)
+                                                    {
+                                                        <li>
+                                                            <a href="/davetiyeler/@mc.Name.ToLower()/kategori/@c.Name.ToLower()">
+                                                                <span class="mm-text">@c.Name</span>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/iletisim">
+                                        İletişim
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/sikca-sorulan-sorular">
+                                        S.S.S
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Mobile Navigation End Here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="mobile-sticky-header-height"></div>*@
+    </div>
+</header>

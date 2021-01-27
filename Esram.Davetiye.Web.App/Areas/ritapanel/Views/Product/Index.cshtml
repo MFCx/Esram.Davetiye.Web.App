@@ -1,0 +1,62 @@
+﻿@model List<MasterCategory>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/ritapanel/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<div class="container my-5 py-5">
+    <a href="/ritapanel/urun-ekle" class="btn btn-info btn-block mb-4"><i class="fa fa-plus"></i> Yeni Davetiye Oluştur</a>
+    <div class="row">
+        <div class="form-group col">
+            <select class="form-control" id="mcSelect">
+                <option value="0" selected disabled>Ana kategori seçiniz</option>
+                @foreach (var mc in Model)
+                {
+                    <option value="@mc.Id">@mc.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col">
+            <select class="form-control" id="cSelect">
+                <option value="0" selected disabled>Alt kategori seçiniz</option>
+            </select>
+        </div>
+    </div>
+    <div id="productList">
+        @await Component.InvokeAsync("ProductTable")
+    </div>
+</div>
+
+@section Javascript{
+    <script>
+        $('#mcSelect').change(function () {
+            $.ajax({
+                url: "/getcatbymaster",
+                type: "post",
+                dataType: "json",
+                data: { mcid: $('#mcSelect option:selected').val() },
+                success: function (res) {
+                    document.getElementById('cSelect').innerHTML = '<option value="0" selected disabled>Alt kategori seçiniz</option>';
+                    for (var i = 0; i < res.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.value = res[i].id;
+                        opt.text = res[i].name;
+                        document.getElementById('cSelect').appendChild(opt);
+                    }
+                }
+            })
+        })
+
+        $('#cSelect').change(function() {
+            $.ajax({
+                url: '/changeproductlist',
+                type: 'post',
+                data: { mcid: $('#mcSelect option:selected').val(), cid: $('#cSelect option:selected').val() },
+                success: function (res) {
+                    $('#productList').html(res)
+                }
+            })
+        })
+    </script>
+}

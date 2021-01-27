@@ -1,0 +1,38 @@
+﻿@model Esram.Davetiye.Web.App.Models.Entities.Product
+<div class="row">
+    <div class="col-md-6">
+        <img id="bigPic" src="~/@Model.MainPicture" alt="Ana resim" class="d-block w-100" />
+    </div>
+    <div class="col-md-6">
+        <div class="modal-box product-summary">
+            <h4 class="mb--10">@Model.Name (@Model.Code)</h4>
+            <p class="product-short-description">
+                Fiyat: <b>@Model.Price</b>
+            </p>
+            <p class="product-short-description">
+                Marka: <b>@Model.Category.Name</b>
+            </p>
+            <hr />
+            <div class="row mt--20">
+                <div class="col-3">
+                    <a class="smallImage" href="javascript:void(0)"><img class="border border-info" src="~/@Model.MainPicture" alt="Davetiye resim" /></a>
+                </div>
+                @foreach (var item in Model.Pictures)
+                {
+                    <div class="col-3">
+                        <a class="smallImage" href="javascript:void(0)"><img class="border border-info" src="~/@item.Path" alt="Davetiye resim" /></a>
+                    </div>
+                }
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    <script>
+        $('.smallImage').click(function () {
+            var src = this.children[0].getAttribute('src');
+            console.log(src);
+            document.getElementById('bigPic').setAttribute('src', src);
+        })
+    </script>

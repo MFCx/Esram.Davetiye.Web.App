@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="~/@CorporateSession.Corporate.IconPath" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/img/icon.png">
+
+    <!-- Title -->
+    <title>@CorporateSession.Corporate.CompanyName - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/dl-icon.css">
+    <link rel="stylesheet" href="~/assets/css/plugins.css">
+    <link rel="stylesheet" href="~/assets/css/revoulation.css">
+    <link rel="stylesheet" href="~/assets/css/main.css">
+    <script src="~/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
+    @RenderSection("Style", false)
+</head>
+<body>
+    @await Component.InvokeAsync("Header")
+    @RenderBody()
+    @await Component.InvokeAsync("Footer")
+
+    <script src="~/assets/js/vendor/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/plugins.js"></script>
+    <script src="~/assets/js/ajax-mail.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/assets/js/revoulation/jquery.themepunch.tools.min.js"></script>
+    <script src="~/assets/js/revoulation/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.actions.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.migration.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="~/assets/js/revoulation/extensions/revolution.extension.video.min.js"></script>
+    <script src="~/assets/js/revoulation.js"></script>
+    @RenderSection("Javascript",false)
+</body>
+</html>

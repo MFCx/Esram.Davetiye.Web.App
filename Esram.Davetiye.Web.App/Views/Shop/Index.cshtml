@@ -1,0 +1,190 @@
+﻿@model Esram.Davetiye.Web.App.Models.ViewModels.ShopIndexViewModel
+@{
+    string nmc = (string)ViewBag.MasterCategory;
+    string uc = "";
+    if (ViewBag.Category != null)
+    {
+        string c = (string)ViewBag.Category;
+        uc = c[0].ToString().ToUpper() + c.Substring(1);
+    }
+    string umc = nmc[0].ToString().ToUpper() + nmc.Substring(1);
+
+    ViewData["Title"] = ViewBag.Category == null ? umc : uc;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-area bg--white-6 pt--60 pb--70 pt-lg--40 pb-lg--50 pt-md--30 pb-md--40">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="page-title">@(ViewBag.Category!=null?ViewBag.Category:ViewBag.MasterCategory)</h1>
+                <ul class="breadcrumb justify-content-center">
+                    <li><a href="/">Anasayfa</a></li>
+                    <li class="current"><span>Davetiyeler</span></li>
+                    <li><a href="/davetiyeler/@(((string)ViewBag.MasterCategory).ToLower())">@ViewBag.MasterCategory</a></li>
+                    @if (ViewBag.Category != null)
+                    {
+                        <li class="current"><span>@ViewBag.Category</span></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <!-- Breadcrumb area End -->
+    <!-- Main Content Wrapper Start -->
+    <div id="content" class="main-content-wrapper">
+        <div class="page-content-inner enable-page-sidebar">
+            <div class="container-fluid">
+                <div class="row shop-sidebar pt--45 pt-md--35 pt-sm--20 pb--60 pb-md--50 pb-sm--40">
+                    <div class="col-lg-9 order-lg-2" id="main-content">
+
+                        <div class="shop-products">
+                            <div class="row grid-space-20 xxl-block-grid-4">
+                                @foreach (var p in Model.Products)
+                                {
+                                    <div class="col-6 col-lg-4 col-sm-6 mb--40 mb-md--30">
+                                        <div class="airi-product">
+                                            <div class="product-inner">
+                                                <figure class="product-image">
+                                                    <div class="product-image--holder">
+                                                        <a href="/davetiyeler/@p.Category.MasterCategory.Name.ToLower()/@p.Category.Name.ToLower()/@p.Code">
+                                                            <img src="~/@p.MainPicture"
+                                                                 alt="Product Image" class="primary-image">
+                                                            <img src="~/@p.MainPicture"
+                                                                 alt="Product Image" class="secondary-image">
+                                                        </a>
+                                                    </div>
+                                                    <div class="airi-product-action">
+                                                        <div class="product-action">
+                                                            <a onclick="ChangeProductModal(@p.Id)" class="quickview-btn action-btn"
+                                                               data-toggle="tooltip" data-placement="top"
+                                                               title="Önizleme">
+                                                                <span data-toggle="modal"
+                                                                      data-target="#productModal">
+                                                                    <i class="dl-icon-view"></i>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </figure>
+                                                <div class="product-info">
+                                                    <h3 class="product-title">
+                                                        <a href="/davetiyeler/@p.Category.MasterCategory.Name.ToLower()/@p.Category.Name.ToLower()/@p.Code">@p.Name (@p.Code)</a>
+                                                    </h3>
+                                                    <span class="product-price-wrapper">
+                                                        <span class="money">@p.Price</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <nav class="pagination-wrap">
+                            <ul class="pagination">
+                                @if (ViewBag.Category == null)
+                                {
+                                    if (ViewBag.PageIndex != 1)
+                                    {
+                                        <li>
+                                            <a href="/davetiyeler/@ViewBag.MasterCategory/@(ViewBag.PageIndex-1)" class="prev page-number">
+                                                <i class="fa fa-angle-double-left"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                    @for (int i = 1; i <= ViewBag.PageCount; i++)
+                                    {
+                                        <li><a href="/davetiyeler/@ViewBag.MasterCategory/@i"><span class="@(ViewBag.PageIndex==i?"current":"") page-number">@i</span></a></li>
+                                    }
+                                    if (ViewBag.PageIndex != ViewBag.PageCount)
+                                    {
+                                        <li>
+                                            <a href="/davetiyeler/@ViewBag.MasterCategory/@(ViewBag.PageIndex-1)" class="next page-number">
+                                                <i class="fa fa-angle-double-right"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    if (ViewBag.PageIndex != 1)
+                                    {
+                                        <li>
+                                            <a href="/davetiyeler/@ViewBag.MasterCategory/kategori/@ViewBag.Category/@(ViewBag.PageIndex-1)" class="prev page-number">
+                                                <i class="fa fa-angle-double-left"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                    @for (int i = 1; i <= ViewBag.PageCount; i++)
+                                    {
+                                        <li><a href="/davetiyeler/@ViewBag.MasterCategory/kategori/@ViewBag.Category/@i"><span class="@(ViewBag.PageIndex==i?"current":"") page-number">@i</span></a></li>
+                                    }
+                                    if (ViewBag.PageIndex != ViewBag.PageCount)
+                                    {
+                                        <li>
+                                            <a href="/davetiyeler/@ViewBag.MasterCategory/kategori/@ViewBag.Category/@(ViewBag.PageIndex-1)" class="next page-number">
+                                                <i class="fa fa-angle-double-right"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-lg-3 order-lg-1 mt--30 mt-md--40" id="primary-sidebar">
+                        <div class="sidebar-widget">
+                            <!-- Category Widget Start -->
+                            <div class="product-widget categroy-widget mb--35 mb-md--30 text-center">
+                                @foreach (var mc in Model.MasterCategories)
+                                {
+                                    <a href="/davetiyeler/@mc.Name.ToLower()" class="text-decoration-none"><h3 class="widget-title">@mc.Name</h3></a>
+                                    <ul class="prouduct-categories product-widget__list">
+                                        @foreach (var c in mc.Categories)
+                                        {
+                                            <li><a href="/davetiyeler/@mc.Name.ToLower()/kategori/@c.Name.ToLower()">@c.Name</a></li>
+                                        }
+
+                                    </ul>
+                                    <hr />
+                                }
+                            </div>
+                            <!-- Category Widget Start -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade product-modal" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close custom-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="dl-icon-close"></i></span>
+                </button>
+                <div id="productModalContent">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Javascript{
+    <script>
+        function ChangeProductModal(id) {
+            $.ajax({
+                url: "/changeproductmodal",
+                type: "post",
+                data: { pid: id },
+                success: function (res) {
+                    $('#productModalContent').html(res);
+                }
+            })
+        }
+    </script>
+}
